@@ -1,6 +1,9 @@
 package classpath
 
-import "strings"
+import (
+	"strings"
+	"errors"
+)
 
 type CompositeEntry [] Entry
 
@@ -15,8 +18,22 @@ func newCompositeEntry(pathList string) CompositeEntry {
 	return compositeEntry
 }
 
+//依次调用每一个子路径的readClass()方法
 func (self CompositeEntry) readClass(className string) ([]byte, Entry, error) {
-	for_,entry:=range self{
-		data,from,err := en
+	for _, entry := range self {
+		data, from, err := entry.readClass(className)
+		if err == nil {
+			return data, from, nil
+		}
 	}
+	return nil, nil, errors.New("class not found: " + className)
+}
+
+//调用每一个子路径的String()方法，然后把得到的字符串用路径分割副拼接起来
+func (self CompositeEntry) String() string {
+	strs := make([]string, len(self))
+	for i, entry := range self {
+		strs[i] = entry.String()
+	}
+	return strings.Join(strs, pathListSeparator)
 }

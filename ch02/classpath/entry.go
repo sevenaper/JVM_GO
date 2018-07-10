@@ -12,7 +12,7 @@ type Entry interface {
 	String() string
 }
 
-func newEntry(path string) {
+func newEntry(path string)Entry {
 	if strings.Contains(path, pathListSeparator) {
 		return newCompositeEntry(path)
 	}
