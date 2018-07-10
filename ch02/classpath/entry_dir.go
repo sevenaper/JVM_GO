@@ -19,8 +19,17 @@ func newDirEntry(path string) *DirEntry {
 	return &DirEntry{absDir}
 }
 
+//readClass()先把目录和class文件名拼成一个完整的路径
+//然后调用ioutil包提供的ReadFile()函数读取class文件
+//内容，最后返回。
 func (self *DirEntry) readClass(className string) ([]byte, Entry, error) {
 	fileName := filepath.Join(self.absDir, className)
 	data, err := ioutil.ReadFile(fileName)
 	return data, self, err
+}
+
+//返回变量的字符串表示
+func (self *DirEntry) String() string {
+	return self.absDir
+
 }
