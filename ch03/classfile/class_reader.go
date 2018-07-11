@@ -35,7 +35,7 @@ func (self *ClassReader) readUnit64() uint64 {
 }
 
 //读取u2型数据表
-func (self *ClassReader) readUnit16s() []uint64 {
+func (self *ClassReader) readUnit16s() []uint16 {
 	n := self.readUnit16()
 	s := make([]uint16, n)
 	for i := range s {
